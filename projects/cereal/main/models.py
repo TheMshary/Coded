@@ -5,6 +5,9 @@ from django.db import models
 class Manufacturer(models.Model):
 	name = models.CharField(max_length=30, unique=True)
 
+	def __unicode__(self):
+		return self.name
+
 class Cereal(models.Model):
 
 	# cereal identification attributes
@@ -13,9 +16,12 @@ class Cereal(models.Model):
 	manufacturer = models.ForeignKey("main.Manufacturer", null=True)
 
 	# other
-	shelf = models.ForeignKey("main.DisplayShelf")
-	ss_weight = models.IntegerField(null=True)
+	display_shelf = models.ForeignKey("main.DisplayShelf", null=True)
+	ss_weight = models.FloatField(null=True)
 	cps = models.FloatField(null=True)
+
+	def __unicode__(self):
+		return self.name
 
 class NutritionFacts(models.Model):
 
@@ -23,8 +29,8 @@ class NutritionFacts(models.Model):
 
 	protein = models.IntegerField(null=True)				# grams
 	fat = models.IntegerField(null=True)					# grams
-	fiber = models.IntegerField(null=True)					# grams
-	carbs = models.IntegerField(null=True)					# grams
+	fiber = models.FloatField(null=True)					# grams
+	carbs = models.FloatField(null=True)					# grams
 	sugar = models.IntegerField(null=True)					# grams
 
 	sodium = models.IntegerField(null=True)					# milligrams
@@ -32,5 +38,11 @@ class NutritionFacts(models.Model):
 	vitamins_minerals = models.IntegerField(null=True)		# milligrams
 	cereal = models.OneToOneField("main.Cereal")
 
+	def __unicode__(self):
+		return self.name
+
 class DisplayShelf(models.Model):
 	number = models.IntegerField(unique=True)
+
+	def __unicode__(self):
+		return self.name
